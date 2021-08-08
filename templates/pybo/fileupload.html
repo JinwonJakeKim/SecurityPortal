@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+{$ load bootstrap %}
+{% block content %}
+<div class="container">
+    <form method="POST" action="{% url 'pybo:fileupload' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <!-- views.py 에서 context 를 통해 전달되는 form 의 객체명은 하단에 작성 }} -->
+        <!-- Q.실제 template 안의 구성은 아래 form 에서 가져오는건데... '파일선택' 버튼이라던지 이런건 어디서 가져오는거지...? -->
+        <!-- A.form.as_p 를 하게 되면, html 구성요소를 자동으로 생성한다. 그러나 수동으로 별도로 생성할 수도 있다. 참고 : 자동(fileupload.html), 수동(question_form.html) -->
+        {{ fileuploadForm.as_p }}
+        <input type="submit" class="btn btn-primary col-12" value="제출">
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <h5 class="my-3 border-bottom pb-2">질문 등록</h5>
+    <form method="post" class="post-form my-3" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- 오류 표시 Start -->
+        {% if form.errors %}
+            <div class="alert alert-danger" role="alert">
+                {% for field in form %}
+                {% if field.errors %}
+                <strong>{{ field.label }}</strong>
+                {{ field.errors }}
+                {% endif %}
+            {% endfor %}
+            </div>
+        {% endif %}
+        <!-- 오류 표시 End -->
+        <!-- form.as_p 는 html 을 자동으로 생성해주나, 아래와 같이 form 의 개별 요소들을 참조하여
+        원래 html 처럼 각각의 요소에 대해 예쁘게 수정할 수 있다 -->
+        <div class="form-group">
+            <label for="subject">제목</label>
+            <input type="text" class="form-control" name="subject" id="subject" value="{{ form.subject.value|default_if_none:'' }}">
+            <!-- 위 value 부분은 필수 속성은 아니다 -->
+        </div>
+        <div class="form-group">
+            <label for="content">내용</label>
+            <textarea class="form-control" name="content" id="content" rows="10">{{ form.content.value|default_if_none:'' }}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="imgfile">첨부파일 : </label>
+            <input type="file" class="form-control" name="imgfile" id="imgfile">
+        </div>
+        <div>
+            <br>
+            <button type="submit" class="btn btn-primary">저장하기</button>
+            <br>
+        </div>
+    </form>
+</div>
+{% endblock %}
