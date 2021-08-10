@@ -1,5 +1,15 @@
 from django import forms
-from pybo.models import Question, Answer, FileUpload
+from pybo.models import Question, Answer, FileUpload, Model_laws_data
+
+class laws_Form(forms.ModelForm):
+    class Meta:
+        model = Model_laws_data
+        fields = ['subject', 'content', 'imgfile']
+        labels = {
+            'subject':'제목',
+            'content':'내용',
+            'imgfile':'첨부파일',
+        }
 
 class QuestionForm(forms.ModelForm):
     class Meta:

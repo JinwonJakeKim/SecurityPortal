@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Question, Model_laws_data, Model_SKTL_Policy, Model_GuideManual, Model_Trend, FileUpload
 from django.utils import timezone
-from .forms import QuestionForm, AnswerForm, FileUploadForm
+from .forms import QuestionForm, AnswerForm, FileUploadForm, laws_Form
 from django.core.paginator import Paginator
 
 def home(request):
@@ -116,6 +116,29 @@ def fileUpload(request):
             'fileuploadForm': fileuploadForm,
         }
         return render(request, 'pybo/fileupload.html', context)
+
+def laws_create(request):
+    """
+    pybo  질문 등록, 맨처음 이 페이지에 질문을 등록하기위해 진입할때는 GET 방식으로 진입되어 Else 문이 실행되고
+    해당 form 에서 submit을 누르면 POST 방식으로 요청되어 데이터가 저장된다.
+    if == POST -> 입력후 실행부분 , if == GET -> 입력전 실행부분
+    """
+    if request.method == 'POST': #저장하기, 입력후 실행부
+        form = laws_Form(request.POST)
+        if form.is_valid():
+            laws = form.save(commit=False)
+            laws.imgfile = request.FILES["imgfile"] #!!! 반드시 files 은 이처럼 따로 request의 files 을 따로 모델속성에 저장해줘야한다.
+            laws.create_date = timezone.now()
+            laws.save()
+            return redirect('pybo:laws_data')
+            #question_form.html에서 입력한 값을 POST 보내서 위 코드로 저장이 되면 index 함수를 호출시켜서 결국 question_list.html 보여지도록 Redirection
+    else:
+        # request.method 가 'GET'인 경우 호출됨, 질문등록하기, 입력전 실행부
+        form = laws_Form()
+    context = {
+        'form': form
+    }
+    return render(request, 'pybo/laws_form.html', context)
 
 def question_create(request):
     """

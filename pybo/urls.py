@@ -16,4 +16,5 @@ urlpatterns = [
     path('answer/create/<int:question_id>/', views.answer_create, name='answer_create'),
     path('question/create/', views.question_create, name='question_create'),
     path('fileupload/', views.fileUpload, name='fileupload'),
+    path('laws/create', views.laws_create, name='laws_create'),
 ]
