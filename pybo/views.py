@@ -127,10 +127,11 @@ def question_create(request):
         form = QuestionForm(request.POST)
         if form.is_valid():
             question = form.save(commit=False)
-            question.imgfile = request.FILES["imgfile"]
+            question.imgfile = request.FILES["imgfile"] #!!! 반드시 files 은 이처럼 따로 request의 files 을 따로 모델속성에 저장해줘야한다.
             question.create_date = timezone.now()
             question.save()
-            return redirect('pybo:index') #question_form.html에서 입력한 값을 POST 보내서 위 코드로 저장이 되면 index 함수를 호출시켜서 결국 question_list.html 보여지도록 Redirection
+            return redirect('pybo:index')
+            #question_form.html에서 입력한 값을 POST 보내서 위 코드로 저장이 되면 index 함수를 호출시켜서 결국 question_list.html 보여지도록 Redirection
     else:
         # request.method 가 'GET'인 경우 호출됨, 질문등록하기, 입력전 실행부
         form = QuestionForm()
