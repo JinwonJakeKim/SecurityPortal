@@ -31,8 +31,14 @@
             <textarea class="form-control" name="content" id="content" rows="10">{{ form.content.value|default_if_none:'' }}</textarea>
         </div>
         <div class="form-group">
-            <label for="imgfile">첨부파일 : </label>
-            <input type="file" class="form-control" name="imgfile" id="imgfile">
+            {{ form.upload_files }}
+            <small id="help" class="form-text text-muted">
+                [파일업로드]&nbsp;첨부할 파일을 업로드해주세요. 여러 파일은 압축해서 업로드해주세요.
+            </small>
+            <!--
+            <label for="upload_files">첨부파일 : </label>
+            <input type="file" class="form-control" name="upload_files" id="upload_files">
+            -->
         </div>
         <div>
             <br>

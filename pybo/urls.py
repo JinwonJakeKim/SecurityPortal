@@ -12,9 +12,12 @@ urlpatterns = [
     path('GuideManual/', views.GuideManual, name='GuideManual'),
     path('Trend/', views.Trend, name='Trend'),
     path('', views.index, name='index'),
-    path('<int:question_id>/', views.detail, name='detail'),
+    path('laws/<int:laws_id>/', views.laws_detail, name='laws_detail'),
+    path('question/<int:question_id>/', views.detail, name='detail'),
+    path('laws_answer/create/<int:laws_id>/', views.laws_answer_create, name='laws_answer_create'),
     path('answer/create/<int:question_id>/', views.answer_create, name='answer_create'),
     path('question/create/', views.question_create, name='question_create'),
     path('fileupload/', views.fileUpload, name='fileupload'),
     path('laws/create', views.laws_create, name='laws_create'),
+    path('download/<int:pk>', views.laws_download_view, name="laws_download"),
 ]

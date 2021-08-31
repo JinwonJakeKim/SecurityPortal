@@ -18,7 +18,7 @@
         <tr>
             <td>{{ laws_list.paginator.count|sub:laws_list.start_index|sub:forloop.counter0|add:1 }}</td>
             <td>
-                <a href="{% url 'pybo:detail' laws.id %}">
+                <a href="{% url 'pybo:laws_detail' laws.id %}">
                     {{ laws.subject }}
                 </a>
             </td>
