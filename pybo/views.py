@@ -82,6 +82,14 @@ def detail(request, question_id):
     context = {'question': question} #위에서 get한 question 객체를 text 화
     return render(request, 'pybo/question_detail.html', context)
 
+def laws_detail(request, laws_id):
+    """
+    pybo 내용 출력
+    """
+    laws_detail = get_object_or_404(Model_laws_data, pk=laws_id) #id에 해당하는 Model_laws_data 객체를 get
+    context = {'laws_detail': laws_detail} #' ' 안의 변수를 그대로 .html 파일에서 변수 사용(변수명 동일 필수)
+    return render(request, 'pybo/laws_detail.html', context)
+
 def answer_create(request, question_id):
     """
     pybo 답변 등록
@@ -100,14 +108,6 @@ def answer_create(request, question_id):
     context = {'question': question, 'form': form}
     return render(request, 'pybo/question_detail.html', context)
 
-def laws_detail(request, laws_id):
-    """
-    pybo 내용 출력
-    """
-    laws_detail = get_object_or_404(Model_laws_data, pk=laws_id) #id에 해당하는 Model_laws_data 객체를 get
-    context = {'laws_detail': laws_detail} #' ' 안의 변수를 그대로 .html 파일에서 변수 사용(변수명 동일 필수)
-    return render(request, 'pybo/laws_detail.html', context)
-
 def laws_answer_create(request, laws_id):
     """
     pybo 답변 등록
@@ -118,7 +118,7 @@ def laws_answer_create(request, laws_id):
         if form.is_valid():
             laws_answer = form.save(commit=False)
             laws_answer.create_date = timezone.now()
-            laws_answer.question = laws_detail
+            laws_answer.laws_data = laws_detail
             laws_answer.save()
             return redirect('pybo:laws_detail', laws_id=laws_detail.id)
     else:

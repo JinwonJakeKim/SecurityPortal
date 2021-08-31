@@ -16,9 +16,10 @@
         </div>
     </div>
     <h5 class="border-bottom my-3 py-2">
-        {{laws_detail.answer_set.count}}개의 답변이 있습니다.
+        {{ laws_detail.laws_answer_set.count }}개의 답변이 있습니다.
     </h5>
-    {% for answer in laws_detail.answer_set.all %}
+    {% for answer in laws_detail.laws_answer_set.all %}
+    <!-- laws_detail.[MODEL명]_set.all -->
     <div class="card my-3">
         <div class="card-body">
             <div class="card-text" style="white-space: pre-line;">
