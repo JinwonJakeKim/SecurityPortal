@@ -13,16 +13,16 @@
         </tr>
         </thead>
         <tbody>
-        {% if question_list %}
-        {% for question in question_list %}
+        {% if SKTL_policy_list %}
+        {% for SKTL_policy in SKTL_policy_list %}
         <tr>
-            <td>{{ question_list.paginator.count|sub:question_list.start_index|sub:forloop.counter0|add:1 }}</td>
+            <td>{{ SKTL_policy_list.paginator.count|sub:SKTL_policy_list.start_index|sub:forloop.counter0|add:1 }}</td>
             <td>
-                <a href="{% url 'pybo:detail' question.id %}">
-                    {{ question.subject }}
+                <a href="{% url 'pybo:SKTL_policy_detail' SKTL_policy.id %}">
+                    {{ SKTL_policy.subject }}
                 </a>
             </td>
-            <td>{{ question.create_date }}</td>
+            <td>{{ SKTL_policy.create_date }}</td>
         </tr>
         {% endfor %}
         {% else %}
@@ -32,20 +32,21 @@
         {% endif %}
         </tbody>
     </table>
-    <a href="{% url 'pybo:question_create' %}" class="btn btn-primary" >
+    <a href="{% url 'pybo:SKTL_policy_create' %}" class="btn btn-primary" >
         질문 등록하기
     </a>
 </div>
 {% endblock %}
 
 <!--
-{% if question_list %}
+{% if SKTL_policy_list %}
     <ul>
-    {% for question in question_list %}
-        <li><a href="{% url 'pybo:detail' question.id %}">{{ question.subject }}</a></li>
+    {% for SKTL_policy in SKTL_policy_list %}
+        <li><a href="{% url 'pybo:detail' SKTL_policy.id %}">{{ SKTL_policy.subject }}</a></li>
     {% endfor %}
     </ul>
 {% else %}
     <p>질문이 없습니다.</p>
 {% endif %}
 -->
+

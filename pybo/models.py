@@ -19,32 +19,40 @@ class Model_laws_data(models.Model):
     def __str__(self):
         return self.subject
 
-class Model_regulation_data(models.Model):
+class Model_regulation(models.Model):
     subject = models.CharField(max_length=200)
+    upload_files = models.FileField(upload_to=get_file_path, null=True, blank=True, verbose_name='파일')
+    filename = models.CharField(max_length=64, null=True, verbose_name='첨부파일명')
     content = models.TextField()
     create_date = models.DateTimeField()
 
     def __str__(self):
         return self.subject
 
-class Model_SKTL_Policy(models.Model):
+class Model_SKTL_policy(models.Model):
     subject = models.CharField(max_length=200)
+    upload_files = models.FileField(upload_to=get_file_path, null=True, blank=True, verbose_name='파일')
+    filename = models.CharField(max_length=64, null=True, verbose_name='첨부파일명')
     content = models.TextField()
     create_date = models.DateTimeField()
 
     def __str__(self):
         return self.subject
 
-class Model_GuideManual(models.Model):
+class Model_guide(models.Model):
     subject = models.CharField(max_length=200)
+    upload_files = models.FileField(upload_to=get_file_path, null=True, blank=True, verbose_name='파일')
+    filename = models.CharField(max_length=64, null=True, verbose_name='첨부파일명')
     content = models.TextField()
     create_date = models.DateTimeField()
 
     def __str__(self):
         return self.subject
 
-class Model_Trend(models.Model):
+class Model_trend(models.Model):
     subject = models.CharField(max_length=200)
+    upload_files = models.FileField(upload_to=get_file_path, null=True, blank=True, verbose_name='파일')
+    filename = models.CharField(max_length=64, null=True, verbose_name='첨부파일명')
     content = models.TextField()
     create_date = models.DateTimeField()
 
@@ -75,5 +83,25 @@ class Answer(models.Model):
 
 class laws_Answer(models.Model):
     laws_data = models.ForeignKey(Model_laws_data, on_delete=models.CASCADE)
+    content = models.TextField()
+    create_date = models.DateTimeField()
+
+class regulation_Answer(models.Model):
+    regulation = models.ForeignKey(Model_regulation, null=True, on_delete=models.CASCADE)
+    content = models.TextField()
+    create_date = models.DateTimeField()
+
+class SKTL_policy_Answer(models.Model):
+    SKTL_policy = models.ForeignKey(Model_SKTL_policy, null=True, on_delete=models.CASCADE)
+    content = models.TextField()
+    create_date = models.DateTimeField()
+
+class guide_Answer(models.Model):
+    guide = models.ForeignKey(Model_guide, null=True, on_delete=models.CASCADE)
+    content = models.TextField()
+    create_date = models.DateTimeField()
+
+class trend_Answer(models.Model):
+    trend = models.ForeignKey(Model_trend, null=True, on_delete=models.CASCADE)
     content = models.TextField()
     create_date = models.DateTimeField()

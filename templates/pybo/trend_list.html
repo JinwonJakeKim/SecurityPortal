@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="container my-3">
-    <h1 class="border-bottom py-2">가이드 & 메뉴얼</h1>
+    <h1 class="border-bottom py-2">지침 자료</h1>
     <table  class="table">
         <thead>
         <tr class="thead-dark">
@@ -13,16 +13,16 @@
         </tr>
         </thead>
         <tbody>
-        {% if question_list %}
-        {% for question in question_list %}
+        {% if trend_list %}
+        {% for trend in trend_list %}
         <tr>
-            <td>{{ question_list.paginator.count|sub:question_list.start_index|sub:forloop.counter0|add:1 }}</td>
+            <td>{{ trend_list.paginator.count|sub:trend_list.start_index|sub:forloop.counter0|add:1 }}</td>
             <td>
-                <a href="{% url 'pybo:detail' question.id %}">
-                    {{ question.subject }}
+                <a href="{% url 'pybo:trend_detail' trend.id %}">
+                    {{ trend.subject }}
                 </a>
             </td>
-            <td>{{ question.create_date }}</td>
+            <td>{{ trend.create_date }}</td>
         </tr>
         {% endfor %}
         {% else %}
@@ -32,20 +32,21 @@
         {% endif %}
         </tbody>
     </table>
-    <a href="{% url 'pybo:question_create' %}" class="btn btn-primary" >
+    <a href="{% url 'pybo:trend_create' %}" class="btn btn-primary" >
         질문 등록하기
     </a>
 </div>
 {% endblock %}
 
 <!--
-{% if question_list %}
+{% if trend_list %}
     <ul>
-    {% for question in question_list %}
-        <li><a href="{% url 'pybo:detail' question.id %}">{{ question.subject }}</a></li>
+    {% for trend in trend_list %}
+        <li><a href="{% url 'pybo:detail' trend.id %}">{{ trend.subject }}</a></li>
     {% endfor %}
     </ul>
 {% else %}
     <p>질문이 없습니다.</p>
 {% endif %}
 -->
+

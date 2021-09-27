@@ -2,9 +2,9 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Question, Model_laws_data, Model_SKTL_Policy, Model_GuideManual, Model_Trend, FileUpload
+from .models import Question, Model_laws_data, Model_regulation, Model_SKTL_policy, Model_guide, Model_trend, FileUpload
 from django.utils import timezone
-from .forms import QuestionForm, AnswerForm, FileUploadForm, laws_Form, laws_AnswerForm
+from .forms import QuestionForm, AnswerForm, FileUploadForm, laws_Form, laws_AnswerForm, regulation_AnswerForm, SKTL_policy_AnswerForm, guide_AnswerForm, trend_AnswerForm, regulation_Form, SKTL_policy_Form, guide_Form, trend_Form
 from django.core.paginator import Paginator
 
 import urllib
@@ -30,36 +30,65 @@ def laws_data(request):
     page_obj = paginator.get_page(page)
 
     context = {'laws_list': page_obj}
-    return render(request, 'pybo/laws_data.html', context)
+    return render(request, 'pybo/laws_list.html', context)
 
 def regulation_data(request):
-    """
-    pybo HOME 출력
-    """
-    return render(request, 'pybo/regulation_data.html')
+    # 입력 인자
+    page = request.GET.get('page', '1') # 페이지(ex-localhost:8000/pybo/?page=1)
 
-def SKTL_Policy(request):
-    """
-    pybo HOME 출력
-    """
-    return render(request, 'pybo/SKTL_Policy.html')
+    # 조회
+    regulation_list = Model_regulation.objects.order_by('-create_date')
 
-def GuideManual(request):
-    """
-    pybo HOME 출력
-    """
-    return render(request, 'pybo/GuideManual.html')
+    # 페이징 처리
+    paginator = Paginator(regulation_list, 10) # 페이지당 10개씩 보여 주기, question_list를 페이징 객체 paginator 로 변환
+    page_obj = paginator.get_page(page)
 
-def Trend(request):
-    """
-    pybo HOME 출력
-    """
-    return render(request, 'pybo/Trend.html')
+    context = {'regulation_list': page_obj}
+    return render(request, 'pybo/regulation_list.html', context)
+
+def SKTL_policy_data(request):
+    # 입력 인자
+    page = request.GET.get('page', '1') # 페이지(ex-localhost:8000/pybo/?page=1)
+
+    # 조회
+    SKTL_policy_list = Model_SKTL_policy.objects.order_by('-create_date')
+
+    # 페이징 처리
+    paginator = Paginator(SKTL_policy_list, 10) # 페이지당 10개씩 보여 주기, question_list를 페이징 객체 paginator 로 변환
+    page_obj = paginator.get_page(page)
+
+    context = {'SKTL_policy_list': page_obj}
+    return render(request, 'pybo/SKTL_policy_list.html', context)
+
+def guide_data(request):
+    # 입력 인자
+    page = request.GET.get('page', '1') # 페이지(ex-localhost:8000/pybo/?page=1)
+
+    # 조회
+    guide_list = Model_guide.objects.order_by('-create_date')
+
+    # 페이징 처리
+    paginator = Paginator(guide_list, 10) # 페이지당 10개씩 보여 주기, question_list를 페이징 객체 paginator 로 변환
+    page_obj = paginator.get_page(page)
+
+    context = {'guide_list': page_obj}
+    return render(request, 'pybo/guide_list.html', context)
+
+def trend_data(request):
+    # 입력 인자
+    page = request.GET.get('page', '1') # 페이지(ex-localhost:8000/pybo/?page=1)
+
+    # 조회
+    trend_list = Model_trend.objects.order_by('-create_date')
+
+    # 페이징 처리
+    paginator = Paginator(trend_list, 10) # 페이지당 10개씩 보여 주기, question_list를 페이징 객체 paginator 로 변환
+    page_obj = paginator.get_page(page)
+
+    context = {'trend_list': page_obj}
+    return render(request, 'pybo/trend_list.html', context)
 
 def index(request):
-    """
-    pybo 목록 출력
-    """
     # 입력 인자
     page = request.GET.get('page', '1') # 페이지(ex-localhost:8000/pybo/?page=1)
 
@@ -75,25 +104,36 @@ def index(request):
     return render(request, 'pybo/question_list.html', context)
 
 def detail(request, question_id):
-    """
-    pybo 내용 출력
-    """
     question = get_object_or_404(Question, pk=question_id) #id에 해당하는 Quesiton 객체를 get
     context = {'question': question} #위에서 get한 question 객체를 text 화
     return render(request, 'pybo/question_detail.html', context)
 
 def laws_detail(request, laws_id):
-    """
-    pybo 내용 출력
-    """
     laws_detail = get_object_or_404(Model_laws_data, pk=laws_id) #id에 해당하는 Model_laws_data 객체를 get
     context = {'laws_detail': laws_detail} #' ' 안의 변수를 그대로 .html 파일에서 변수 사용(변수명 동일 필수)
     return render(request, 'pybo/laws_detail.html', context)
 
+def regulation_detail(request, regulation_id):
+    regulation_detail = get_object_or_404(Model_regulation, pk=regulation_id) #id에 해당하는 Model_laws_data 객체를 get
+    context = {'regulation_detail': regulation_detail} #' ' 안의 변수를 그대로 .html 파일에서 변수 사용(변수명 동일 필수)
+    return render(request, 'pybo/regulation_detail.html', context)
+
+def SKTL_policy_detail(request, SKTL_policy_id):
+    SKTL_policy_detail = get_object_or_404(Model_SKTL_policy, pk=SKTL_policy_id) #id에 해당하는 Model_laws_data 객체를 get
+    context = {'SKTL_policy_detail': SKTL_policy_detail} #' ' 안의 변수를 그대로 .html 파일에서 변수 사용(변수명 동일 필수)
+    return render(request, 'pybo/SKTL_policy_detail.html', context)
+
+def guide_detail(request, guide_id):
+    guide_detail = get_object_or_404(Model_guide, pk=guide_id) #id에 해당하는 Model_laws_data 객체를 get
+    context = {'guide_detail': guide_detail} #' ' 안의 변수를 그대로 .html 파일에서 변수 사용(변수명 동일 필수)
+    return render(request, 'pybo/guide_detail.html', context)
+
+def trend_detail(request, trend_id):
+    trend_detail = get_object_or_404(Model_trend, pk=trend_id) #id에 해당하는 Model_laws_data 객체를 get
+    context = {'trend_detail': trend_detail} #' ' 안의 변수를 그대로 .html 파일에서 변수 사용(변수명 동일 필수)
+    return render(request, 'pybo/trend_detail.html', context)
+
 def answer_create(request, question_id):
-    """
-    pybo 답변 등록
-    """
     question = get_object_or_404(Question, pk=question_id)
     if request.method == "POST":
         form = AnswerForm(request.POST)
@@ -109,9 +149,6 @@ def answer_create(request, question_id):
     return render(request, 'pybo/question_detail.html', context)
 
 def laws_answer_create(request, laws_id):
-    """
-    pybo 답변 등록
-    """
     laws_detail = get_object_or_404(Model_laws_data, pk=laws_id)
     if request.method == "POST":
         form = laws_AnswerForm(request.POST)
@@ -126,6 +163,65 @@ def laws_answer_create(request, laws_id):
     context = {'laws_detail': laws_detail, 'form': form}
     return render(request, 'pybo/laws_detail.html', context)
 
+def regulation_answer_create(request, regulation_id):
+    regulation_detail = get_object_or_404(Model_regulation, pk=regulation_id)
+    if request.method == "POST":
+        form = regulation_AnswerForm(request.POST)
+        if form.is_valid():
+            regulation_answer = form.save(commit=False)
+            regulation_answer.create_date = timezone.now()
+            regulation_answer.regulation_data = regulation_detail
+            regulation_answer.save()
+            return redirect('pybo:regulation_detail', regulation_id=regulation_detail.id)
+    else:
+        form = regulation_AnswerForm()
+    context = {'regulation_detail': regulation_detail, 'form': form}
+    return render(request, 'pybo/regulation_detail.html', context)
+
+def SKTL_policy_answer_create(request, SKTL_policy_id):
+    SKTL_policy_detail = get_object_or_404(Model_SKTL_policy, pk=SKTL_policy_id)
+    if request.method == "POST":
+        form = SKTL_policy_AnswerForm(request.POST)
+        if form.is_valid():
+            SKTL_policy_answer = form.save(commit=False)
+            SKTL_policy_answer.create_date = timezone.now()
+            SKTL_policy_answer.SKTL_policy_data = SKTL_policy_detail
+            SKTL_policy_answer.save()
+            return redirect('pybo:SKTL_policy_detail', SKTL_policy_id=SKTL_policy_detail.id)
+    else:
+        form = SKTL_policy_AnswerForm()
+    context = {'SKTL_policy_detail': SKTL_policy_detail, 'form': form}
+    return render(request, 'pybo/SKTL_policy_detail.html', context)
+
+def guide_answer_create(request, guide_id):
+    guide_detail = get_object_or_404(Model_guide, pk=guide_id)
+    if request.method == "POST":
+        form = guide_AnswerForm(request.POST)
+        if form.is_valid():
+            guide_answer = form.save(commit=False)
+            guide_answer.create_date = timezone.now()
+            guide_answer.Guide_data = guide_detail
+            guide_answer.save()
+            return redirect('pybo:guide_detail', guide_id=guide_detail.id)
+    else:
+        form = guide_AnswerForm()
+    context = {'guide_detail': guide_detail, 'form': form}
+    return render(request, 'pybo/guide_detail.html', context)
+
+def trend_answer_create(request, trend_id):
+    trend_detail = get_object_or_404(Model_trend, pk=trend_id)
+    if request.method == "POST":
+        form = trend_AnswerForm(request.POST)
+        if form.is_valid():
+            trend_answer = form.save(commit=False)
+            trend_answer.create_date = timezone.now()
+            trend_answer.trend_data = trend_detail
+            trend_answer.save()
+            return redirect('pybo:trend_detail', trend_id=trend_detail.id)
+    else:
+        form = trend_AnswerForm()
+    context = {'trend_detail': trend_detail, 'form': form}
+    return render(request, 'pybo/trend_detail.html', context)
 
 def question_create(request):
     """
@@ -176,6 +272,109 @@ def laws_create(request):
     }
     return render(request, 'pybo/laws_form.html', context)
 
+def regulation_create(request):
+    """
+    pybo  질문 등록, 맨처음 이 페이지에 질문을 등록하기위해 진입할때는 GET 방식으로 진입되어 Else 문이 실행되고
+    해당 form 에서 submit을 누르면 POST 방식으로 요청되어 데이터가 저장된다.
+    if == POST -> 입력후 실행부분 , if == GET -> 입력전 실행부분
+    """
+    if request.method == 'POST': #저장하기, 입력후 실행부
+        form = regulation_Form(request.POST, request.FILES)#regulation_Form 에서 정의된 인자는 1개(forms.ModelForm) 이더라도 request.FILES 따로 받을 수 있음
+        if form.is_valid():
+            regulation = form.save(commit=False)
+            if request.FILES:
+                if 'upload_files' in request.FILES.keys():
+                    regulation.filename = request.FILES['upload_files'].name
+            #regulation.upload_files = request.FILES["upload_files"] #!!! 반드시 files 은 이처럼 따로 request의 files 을 따로 모델속성에 저장해줘야한다.
+            regulation.create_date = timezone.now()
+            regulation.save()
+            return redirect('pybo:regulation_data')
+            #question_form.html에서 입력한 값을 POST 보내서 위 코드로 저장이 되면 index 함수를 호출시켜서 결국 question_list.html 보여지도록 Redirection
+    else:
+        # request.method 가 'GET'인 경우 호출됨, 질문등록하기, 입력전 실행부
+        form = regulation_Form()
+    context = {
+        'form': form
+    }
+    return render(request, 'pybo/regulation_form.html', context)
+
+def SKTL_policy_create(request):
+    """
+    pybo  질문 등록, 맨처음 이 페이지에 질문을 등록하기위해 진입할때는 GET 방식으로 진입되어 Else 문이 실행되고
+    해당 form 에서 submit을 누르면 POST 방식으로 요청되어 데이터가 저장된다.
+    if == POST -> 입력후 실행부분 , if == GET -> 입력전 실행부분
+    """
+    if request.method == 'POST': #저장하기, 입력후 실행부
+        form = SKTL_policy_Form(request.POST, request.FILES)#SKTL_policy_Form 에서 정의된 인자는 1개(forms.ModelForm) 이더라도 request.FILES 따로 받을 수 있음
+        if form.is_valid():
+            SKTL_policy = form.save(commit=False)
+            if request.FILES:
+                if 'upload_files' in request.FILES.keys():
+                    SKTL_policy.filename = request.FILES['upload_files'].name
+            #SKTL_policy.upload_files = request.FILES["upload_files"] #!!! 반드시 files 은 이처럼 따로 request의 files 을 따로 모델속성에 저장해줘야한다.
+            SKTL_policy.create_date = timezone.now()
+            SKTL_policy.save()
+            return redirect('pybo:SKTL_policy_data')
+            #question_form.html에서 입력한 값을 POST 보내서 위 코드로 저장이 되면 index 함수를 호출시켜서 결국 question_list.html 보여지도록 Redirection
+    else:
+        # request.method 가 'GET'인 경우 호출됨, 질문등록하기, 입력전 실행부
+        form = SKTL_policy_Form()
+    context = {
+        'form': form
+    }
+    return render(request, 'pybo/SKTL_policy_form.html', context)
+
+def guide_create(request):
+    """
+    pybo  질문 등록, 맨처음 이 페이지에 질문을 등록하기위해 진입할때는 GET 방식으로 진입되어 Else 문이 실행되고
+    해당 form 에서 submit을 누르면 POST 방식으로 요청되어 데이터가 저장된다.
+    if == POST -> 입력후 실행부분 , if == GET -> 입력전 실행부분
+    """
+    if request.method == 'POST': #저장하기, 입력후 실행부
+        form = guide_Form(request.POST, request.FILES)#guide_Form 에서 정의된 인자는 1개(forms.ModelForm) 이더라도 request.FILES 따로 받을 수 있음
+        if form.is_valid():
+            guide = form.save(commit=False)
+            if request.FILES:
+                if 'upload_files' in request.FILES.keys():
+                    guide.filename = request.FILES['upload_files'].name
+            #guide.upload_files = request.FILES["upload_files"] #!!! 반드시 files 은 이처럼 따로 request의 files 을 따로 모델속성에 저장해줘야한다.
+            guide.create_date = timezone.now()
+            guide.save()
+            return redirect('pybo:guide_data')
+            #question_form.html에서 입력한 값을 POST 보내서 위 코드로 저장이 되면 index 함수를 호출시켜서 결국 question_list.html 보여지도록 Redirection
+    else:
+        # request.method 가 'GET'인 경우 호출됨, 질문등록하기, 입력전 실행부
+        form = guide_Form()
+    context = {
+        'form': form
+    }
+    return render(request, 'pybo/guide_form.html', context)
+
+def trend_create(request):
+    """
+    pybo  질문 등록, 맨처음 이 페이지에 질문을 등록하기위해 진입할때는 GET 방식으로 진입되어 Else 문이 실행되고
+    해당 form 에서 submit을 누르면 POST 방식으로 요청되어 데이터가 저장된다.
+    if == POST -> 입력후 실행부분 , if == GET -> 입력전 실행부분
+    """
+    if request.method == 'POST': #저장하기, 입력후 실행부
+        form = trend_Form(request.POST, request.FILES)#trend_Form 에서 정의된 인자는 1개(forms.ModelForm) 이더라도 request.FILES 따로 받을 수 있음
+        if form.is_valid():
+            trend = form.save(commit=False)
+            if request.FILES:
+                if 'upload_files' in request.FILES.keys():
+                    trend.filename = request.FILES['upload_files'].name
+            #trend.upload_files = request.FILES["upload_files"] #!!! 반드시 files 은 이처럼 따로 request의 files 을 따로 모델속성에 저장해줘야한다.
+            trend.create_date = timezone.now()
+            trend.save()
+            return redirect('pybo:trend_data')
+            #question_form.html에서 입력한 값을 POST 보내서 위 코드로 저장이 되면 index 함수를 호출시켜서 결국 question_list.html 보여지도록 Redirection
+    else:
+        # request.method 가 'GET'인 경우 호출됨, 질문등록하기, 입력전 실행부
+        form = trend_Form()
+    context = {
+        'form': form
+    }
+    return render(request, 'pybo/trend_form.html', context)
 
 def laws_download_view(request, pk):
     laws = get_object_or_404(Model_laws_data, pk=pk) #pk 값을 key값으로 하여 객체를 얻음
@@ -185,6 +384,58 @@ def laws_download_view(request, pk):
     if os.path.exists(file_url):
         with open(file_url, 'rb') as fh:
             quote_file_url = urllib.parse.quote(laws.filename.encode('utf-8')) #&인코딩으로 변환
+            response = HttpResponse(fh.read(), content_type=mimetypes.guess_type(file_url)[0])
+            response['Content-Disposition'] = 'attachment;filename*=UTF-8\'\'%s' % quote_file_url
+            return response
+        raise Http404
+
+def regulation_download_view(request, pk):
+    regulation = get_object_or_404(Model_regulation, pk=pk) #pk 값을 key값으로 하여 객체를 얻음
+    url = regulation.upload_files.url[1:] #jj, 첨부된 파일의 경로 저장
+    file_url = urllib.parse.unquote(url) #&인코딩된 텍스트를 되돌리기 위해 변환 후 file_url에 저장
+
+    if os.path.exists(file_url):
+        with open(file_url, 'rb') as fh:
+            quote_file_url = urllib.parse.quote(regulation.filename.encode('utf-8')) #&인코딩으로 변환
+            response = HttpResponse(fh.read(), content_type=mimetypes.guess_type(file_url)[0])
+            response['Content-Disposition'] = 'attachment;filename*=UTF-8\'\'%s' % quote_file_url
+            return response
+        raise Http404
+
+def SKTL_policy_download_view(request, pk):
+    SKTL_policy = get_object_or_404(Model_SKTL_policy, pk=pk) #pk 값을 key값으로 하여 객체를 얻음
+    url = SKTL_policy.upload_files.url[1:] #jj, 첨부된 파일의 경로 저장
+    file_url = urllib.parse.unquote(url) #&인코딩된 텍스트를 되돌리기 위해 변환 후 file_url에 저장
+
+    if os.path.exists(file_url):
+        with open(file_url, 'rb') as fh:
+            quote_file_url = urllib.parse.quote(SKTL_policy.filename.encode('utf-8')) #&인코딩으로 변환
+            response = HttpResponse(fh.read(), content_type=mimetypes.guess_type(file_url)[0])
+            response['Content-Disposition'] = 'attachment;filename*=UTF-8\'\'%s' % quote_file_url
+            return response
+        raise Http404
+
+def guide_download_view(request, pk):
+    guide = get_object_or_404(Model_guide, pk=pk) #pk 값을 key값으로 하여 객체를 얻음
+    url = guide.upload_files.url[1:] #jj, 첨부된 파일의 경로 저장
+    file_url = urllib.parse.unquote(url) #&인코딩된 텍스트를 되돌리기 위해 변환 후 file_url에 저장
+
+    if os.path.exists(file_url):
+        with open(file_url, 'rb') as fh:
+            quote_file_url = urllib.parse.quote(guide.filename.encode('utf-8')) #&인코딩으로 변환
+            response = HttpResponse(fh.read(), content_type=mimetypes.guess_type(file_url)[0])
+            response['Content-Disposition'] = 'attachment;filename*=UTF-8\'\'%s' % quote_file_url
+            return response
+        raise Http404
+
+def trend_download_view(request, pk):
+    trend = get_object_or_404(Model_trend, pk=pk) #pk 값을 key값으로 하여 객체를 얻음
+    url = trend.upload_files.url[1:] #jj, 첨부된 파일의 경로 저장
+    file_url = urllib.parse.unquote(url) #&인코딩된 텍스트를 되돌리기 위해 변환 후 file_url에 저장
+
+    if os.path.exists(file_url):
+        with open(file_url, 'rb') as fh:
+            quote_file_url = urllib.parse.quote(trend.filename.encode('utf-8')) #&인코딩으로 변환
             response = HttpResponse(fh.read(), content_type=mimetypes.guess_type(file_url)[0])
             response['Content-Disposition'] = 'attachment;filename*=UTF-8\'\'%s' % quote_file_url
             return response

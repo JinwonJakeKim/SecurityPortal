@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container my-3">
+    <h2 class="border-bottom py-2">{{ trend_detail.subject }}</h2>
+    <div class="card my-3">
+        <div class="card-body">
+            <div class="card-text" style="white-space: pre-line;">
+                {{ trend_detail.content }}
+            </div>
+            <div class="d-flex justify-content-end">
+                <div class="badge badge-light p-2">
+                    {{ trend_detail.create_date }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <h5 class="border-bottom my-3 py-2">
+        {{ trend_detail.trend_answer_set.count }}개의 답변이 있습니다.
+    </h5>
+    {% for answer in trend_detail.trend_answer_set.all %}
+    <!-- trend_detail.[MODEL명]_set.all -->
+    <div class="card my-3">
+        <div class="card-body">
+            <div class="card-text" style="white-space: pre-line;">
+                {{ answer.content }}
+            </div>
+            <div class="d-flex justify-content-end">
+                <div class="badge badge-light p-2">
+                    {{ answer.create_date }}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    <form action="{% url 'pybo:trend_answer_create' trend_detail.id %}" method="post" class="my-3">
+        {% csrf_token %}
+        {% if form.errors %}
+        <div class="alert alert-danger" role="alert">
+        {% for field in form %}
+            {% if field.errors %}
+            <strong>{{ field.label }}</strong>
+            {{ field.errors }}
+            {% endif %}
+        {% endfor %}
+        </div>
+        {% endif %}
+        {% if trend_detail.upload_files %}
+        <div class="col-12 text-right">
+            <span>첨부파일 :&nbsp;&nbsp</span>
+            <a href="{% url 'pybo:trend_download' trend_detail.id %}" >{{ trend_detail.filename|truncatechars:25 }}</a>
+        </div>
+        {% endif %}
+        <div class="form-group">
+            <textarea name="content" id="content" class="form-control" rows="10"></textarea>
+        </div>
+        <input type="submit" value="답변 등록" class="btn btn-primary">
+    </form>
+
+</div>
+{% endblock %}
+

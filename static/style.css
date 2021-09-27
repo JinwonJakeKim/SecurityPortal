@@ -1,0 +1,17 @@
+.left_side {
+    position: relative;
+    width: 20%; /* 원하는 가로크기 */
+    background-color: yellow;
+}
+
+.center_contents {
+    position: relative;
+    width: 60%; /* 원하는 가로크기 */
+}
+
+
+.right_side {
+    position: relative;
+    width: 20%; /* 원하는 가로크기 */
+}
+

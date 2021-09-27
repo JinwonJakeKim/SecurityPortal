@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="container my-3">
-    <h1 class="border-bottom py-2">최신 동향</h1>
+    <h1 class="border-bottom py-2">지침 자료</h1>
     <table  class="table">
         <thead>
         <tr class="thead-dark">
@@ -13,16 +13,16 @@
         </tr>
         </thead>
         <tbody>
-        {% if question_list %}
-        {% for question in question_list %}
+        {% if regulation_list %}
+        {% for regulation in regulation_list %}
         <tr>
-            <td>{{ question_list.paginator.count|sub:question_list.start_index|sub:forloop.counter0|add:1 }}</td>
+            <td>{{ regulation_list.paginator.count|sub:regulation_list.start_index|sub:forloop.counter0|add:1 }}</td>
             <td>
-                <a href="{% url 'pybo:detail' question.id %}">
-                    {{ question.subject }}
+                <a href="{% url 'pybo:regulation_detail' regulation.id %}">
+                    {{ regulation.subject }}
                 </a>
             </td>
-            <td>{{ question.create_date }}</td>
+            <td>{{ regulation.create_date }}</td>
         </tr>
         {% endfor %}
         {% else %}
@@ -32,20 +32,21 @@
         {% endif %}
         </tbody>
     </table>
-    <a href="{% url 'pybo:question_create' %}" class="btn btn-primary" >
+    <a href="{% url 'pybo:regulation_create' %}" class="btn btn-primary" >
         질문 등록하기
     </a>
 </div>
 {% endblock %}
 
 <!--
-{% if question_list %}
+{% if regulation_list %}
     <ul>
-    {% for question in question_list %}
-        <li><a href="{% url 'pybo:detail' question.id %}">{{ question.subject }}</a></li>
+    {% for regulation in regulation_list %}
+        <li><a href="{% url 'pybo:detail' regulation.id %}">{{ regulation.subject }}</a></li>
     {% endfor %}
     </ul>
 {% else %}
     <p>질문이 없습니다.</p>
 {% endif %}
 -->
+
