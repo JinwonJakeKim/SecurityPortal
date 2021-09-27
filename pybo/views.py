@@ -170,7 +170,7 @@ def regulation_answer_create(request, regulation_id):
         if form.is_valid():
             regulation_answer = form.save(commit=False)
             regulation_answer.create_date = timezone.now()
-            regulation_answer.regulation_data = regulation_detail
+            regulation_answer.regulation = regulation_detail
             regulation_answer.save()
             return redirect('pybo:regulation_detail', regulation_id=regulation_detail.id)
     else:
@@ -185,7 +185,7 @@ def SKTL_policy_answer_create(request, SKTL_policy_id):
         if form.is_valid():
             SKTL_policy_answer = form.save(commit=False)
             SKTL_policy_answer.create_date = timezone.now()
-            SKTL_policy_answer.SKTL_policy_data = SKTL_policy_detail
+            SKTL_policy_answer.SKTL_policy = SKTL_policy_detail
             SKTL_policy_answer.save()
             return redirect('pybo:SKTL_policy_detail', SKTL_policy_id=SKTL_policy_detail.id)
     else:
@@ -200,7 +200,7 @@ def guide_answer_create(request, guide_id):
         if form.is_valid():
             guide_answer = form.save(commit=False)
             guide_answer.create_date = timezone.now()
-            guide_answer.Guide_data = guide_detail
+            guide_answer.Guide = guide_detail
             guide_answer.save()
             return redirect('pybo:guide_detail', guide_id=guide_detail.id)
     else:
@@ -215,7 +215,7 @@ def trend_answer_create(request, trend_id):
         if form.is_valid():
             trend_answer = form.save(commit=False)
             trend_answer.create_date = timezone.now()
-            trend_answer.trend_data = trend_detail
+            trend_answer.trend = trend_detail
             trend_answer.save()
             return redirect('pybo:trend_detail', trend_id=trend_detail.id)
     else:
