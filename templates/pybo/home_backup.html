@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load pybo_filter %}
+{% block content %}
+
+<div class="container my-3">
+    <h1 class="border-bottom py-2">HOME</h1>
+    <a href="../laws_data">법령자료</a><br>
+    <a href="../regulation_data">지침자료</a><br>
+    <a href="../SKTL_policy_data">SK텔링크정책</a><br>
+    <a href="../guide_data">가이드 및 메뉴얼</a><br>
+    <a href="../trend_data">최신동향</a><br>
+</div>
+{% endblock %}
+
+<!--
+{% if question_list %}
+    <ul>
+    {% for question in question_list %}
+        <li><a href="{% url 'pybo:detail' question.id %}">{{ question.subject }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>질문이 없습니다.</p>
+{% endif %}
+-->

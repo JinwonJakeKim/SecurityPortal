@@ -1,25 +1,76 @@
 {% extends 'base.html' %}
-{% load pybo_filter %}
 {% block content %}
+{% load static %}
 
-<div class="container my-3">
-    <h1 class="border-bottom py-2">HOME</h1>
-    <a href="../laws_data">법령자료</a><br>
-    <a href="../regulation_data">지침자료</a><br>
-    <a href="../SKTL_policy_data">SK텔링크정책</a><br>
-    <a href="../guide_data">가이드 및 메뉴얼</a><br>
-    <a href="../trend_data">최신동향</a><br>
+<!-- Header-->
+<header id="header" class="py-5">
+    <style> div { text-align: center; } </style>
+    <div class="container px-lg-5">
+        <div class="p-4 p-lg-10 bg-light rounded-3 text-center">
+            <div class="m-4 m-lg-3">
+                <h1 class="display-5 fw-bold">Welcome to Security Potal!</h1>
+                <p class="fs-4">SK텔링크 보안포탈에 오신 것을 환영합니다</p>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div>
+    <img src="{% static 'wall1.png' %}" alt="배경1" width="1200" class="img-responsive" style="margin:0 auto;">
 </div>
-{% endblock %}
 
-<!--
-{% if question_list %}
-    <ul>
-    {% for question in question_list %}
-        <li><a href="{% url 'pybo:detail' question.id %}">{{ question.subject }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>질문이 없습니다.</p>
-{% endif %}
--->
+<!-- Page Content-->
+<section class="pt-5">
+<div class="container px-lg-5">
+    <!-- Page Features-->
+    <div class="row gx-lg-5">
+        <div class="col-lg-6 col-xxl-4 mb-5">
+            <div class="card bg-light border-0 h-100">
+                <div class="card-body text-center p-4 p-lg-5 pt-0 pt-lg-0">
+                    <div class="feature bg-primary bg-gradient text-white rounded-3 mb-4 mt-n4"> 1 </div>
+                    <h2 class="fs-4 fw-bold"><a href="#rules1">정보보호 실천수칙</a></h2>
+                    <p class="mb-0">비대면 시대 지켜야 할</p>
+                    <p class="mb-0">정보보호 실천수칙(개인편)</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-xxl-4 mb-5">
+            <div class="card bg-light border-0 h-100">
+                <div class="card-body text-center p-4 p-lg-5 pt-0 pt-lg-0">
+                    <div class="feature bg-primary bg-gradient text-white rounded-3 mb-4 mt-n4"> 2 </div>
+                    <h2 class="fs-4 fw-bold"><a href="#rules2">랜섬웨어 예방수칙</a></h2>
+                    <p class="mb-0">나의 소중한 자료를 지키는</p>
+                    <p class="mb-0">랜섬웨어 피해 예방 5대 수칙</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-xxl-4 mb-5">
+            <div class="card bg-light border-0 h-100">
+                <div class="card-body text-center p-4 p-lg-5 pt-0 pt-lg-0">
+                    <div class="feature bg-primary bg-gradient text-white rounded-3 mb-4 mt-n4"> 3 </div>
+                    <h2 class="fs-4 fw-bold"><a href="#rules3">스마트폰 보안수칙</a></h2>
+                    <p class="mb-0">일상에서 지켜주세요</p>
+                    <p class="mb-0">스마트폰 보안수칙 10</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="rules1" style="padding:20px;">
+    <img src="{% static 'rules1.jpg' %}" alt="정보보호 실천수칙" width="1200" class="img-responsive img-thumbnail" style="margin:0 auto;">
+</div>
+
+<div id="rules2" style="padding:20px;">
+    <img src="{% static 'rules2.png' %}" alt="랜섬웨어 예방수칙" width="1200" class="img-responsive img-thumbnail" style="margin:0 auto;">
+</div>
+
+<div id="rules3" style="padding:20px;">
+    <img src="{% static 'rules3.jpg' %}" alt="스마트폰 보안수칙" width="1200" class="img-responsive img-thumbnail" style="margin:0 auto;">
+</div>
+
+<div style="position: fixed; bottom: 20px; right: 50px;">
+<a href="#header">TOP</a>
+</div>
+
+{% endblock %}
