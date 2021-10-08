@@ -1,5 +1,5 @@
 from django import forms
-from pybo.models import Question, Answer, FileUpload, Model_laws_data, laws_Answer, Model_regulation, regulation_Answer, Model_SKTL_policy, SKTL_policy_Answer, Model_guide, guide_Answer, Model_trend, trend_Answer
+from pybo.models import Question, Answer, FileUpload, Model_laws_data, laws_Answer, Model_regulation, regulation_Answer, Model_SKTL_policy, SKTL_policy_Answer, Model_guide, guide_Answer, Model_trend, trend_Answer, Model_magazine, magazine_Answer
 
 class QuestionForm(forms.ModelForm):
     class Meta:
@@ -112,6 +112,23 @@ class trend_AnswerForm(forms.ModelForm):
         fields = ['content']
         labels = {
             'content':'답변내용',
+        }
+
+class magazine_Form(forms.ModelForm):
+    class Meta:
+        model = Model_magazine  # 사용할 모델
+        fields = ['subject', 'content']
+        labels = {
+            'subject': '제목',
+            'content': '내용',
+        }
+
+class magazine_AnswerForm(forms.ModelForm):
+    class Meta:
+        model = magazine_Answer
+        fields = ['content']
+        labels = {
+            'content': '답변내용',
         }
 
 class FileUploadForm(forms.ModelForm):

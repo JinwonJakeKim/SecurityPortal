@@ -1,5 +1,5 @@
-{% extends 'security_portal/base.html' %}
-{% load security_portal_filter %}
+{% extends 'base.html' %}
+{% load pybo_filter %}
 {% block content %}
 
 <div class="container my-3">
@@ -29,39 +29,39 @@
 <!--        </tr>-->
 <!--        </thead>-->
         <tbody>
-        {% if question_list %}
-        {% for question in question_list %}
+        {% if magazine_list %}
+        {% for magazine in magazine_list %}
         <tr class="text-center">
             <td rowspan="3", valign="middle">
                 <!-- 번호 = 전체건수 - 시작인덱스 - 현재인덱스 + 1 -->
-                {{ question_list.paginator.count|sub:question_list.start_index|sub:forloop.counter0|add:1 }}
+                {{ magazine_list.paginator.count|sub:magazine_list.start_index|sub:forloop.counter0|add:1 }}
             </td>
             <td rowspan="3">
                 <!이미지 링크 -->
-<!--                {% if question.image %}-->
-                <a href="{% url 'security_portal:detail' question.id %}"><img src="{{ question.image.url }}", width="300", height="200" ></a>
+<!--                {% if magazine.image %}-->
+                <a href="{% url 'pybo:magazine_detail' magazine.id %}"><img src="{{ magazine.image.url }}", width="300", height="200" ></a>
 <!--                {% endif %}-->
-<!--                <a href="{% url 'security_portal:detail' question.id %}"><img src="https://image.ahnlab.com/img_upload/kr/site/images2/info/img_info12.jpg", width="400", height="200"></a>-->
-<!--                    <a href="{% url 'security_portal:detail' question.id %}"><img src="{{ question.image.url }}", width="400", height="200"></a>-->
+<!--                <a href="{% url 'pybo:magazine_detail' magazine.id %}"><img src="https://image.ahnlab.com/img_upload/kr/site/images2/info/img_info12.jpg", width="400", height="200"></a>-->
+<!--                    <a href="{% url 'pybo:magazine_detail' magazine.id %}"><img src="{{ magazine.image.url }}", width="400", height="200"></a>-->
             </td>
             <td class="text-left", colspan="2">
-                <a href="{% url 'security_portal:detail' question.id %}">{{ question.subject }}</a>
-<!--                {% if question.answer_set.count > 0 %}-->
-<!--                 <span class="text-danger small ml-2">{{ question.answer_set.count }}</span>-->
+                <a href="{% url 'pybo:magazine_detail' magazine.id %}">{{ magazine.subject }}</a>
+<!--                {% if magazine.answer_set.count > 0 %}-->
+<!--                 <span class="text-danger small ml-2">{{ magazine.answer_set.count }}</span>-->
 <!--                {% endif %}-->
             </td>
         </tr>
         <tr>
             <td class="text-left", colspan="2">
-                {{ question.content }}
-<!--                {% if question.answer_set.count > 0 %}-->
-<!--                 <span class="text-danger small ml-2">{{ question.answer_set.count }}</span>-->
+                {{ magazine.content }}
+<!--                {% if magazine.answer_set.count > 0 %}-->
+<!--                 <span class="text-danger small ml-2">{{ magazine.answer_set.count }}</span>-->
 <!--                {% endif %}-->
             </td>
         </tr>
         <tr>
-            <td>{{ question.author.username }}</td> <!-- 글쓴이 추가 -->
-            <td class="text-right">{{ question.create_date }}</td>
+            <td>{{ magazine.author.username }}</td> <!-- 글쓴이 추가 -->
+            <td class="text-right">{{ magazine.create_date }}</td>
         </tr>
 
         {% endfor %}
@@ -75,9 +75,9 @@
     <!-- 페이징처리 시작 -->
     <ul class="pagination justify-content-center">
         <!-- 이전페이지 -->
-        {% if question_list.has_previous %}
+        {% if magazine_list.has_previous %}
         <li class="page-item">
-            <a class="page-link" data-page="{{ question_list.previous_page_number }}" href="#">이전</a>
+            <a class="page-link" data-page="{{ magazine_list.previous_page_number }}" href="#">이전</a>
         </li>
         {% else %}
         <li class="page-item disabled">
@@ -85,9 +85,9 @@
         </li>
         {% endif %}
         <!-- 페이지리스트 -->
-        {% for page_number in question_list.paginator.page_range %}
-        {% if page_number >= question_list.number|add:-5 and page_number <= question_list.number|add:5 %}
-            {% if page_number == question_list.number %}
+        {% for page_number in magazine_list.paginator.page_range %}
+        {% if page_number >= magazine_list.number|add:-5 and page_number <= magazine_list.number|add:5 %}
+            {% if page_number == magazine_list.number %}
             <li class="page-item active" aria-current="page">
                 <a class="page-link" data-page="{{ page_number }}" href="#">{{ page_number }}</a>
             </li>
@@ -99,9 +99,9 @@
         {% endif %}
         {% endfor %}
         <!-- 다음페이지 -->
-        {% if question_list.has_next %}
+        {% if magazine_list.has_next %}
         <li class="page-item">
-            <a class="page-link" data-page="{{ question_list.next_page_number }}" href="#">다음</a>
+            <a class="page-link" data-page="{{ magazine_list.next_page_number }}" href="#">다음</a>
         </li>
         {% else %}
         <li class="page-item disabled">
@@ -110,9 +110,9 @@
         {% endif %}
     </ul>
     <!-- 페이징처리 끝 -->
-    <a href="{% url 'security_portal:question_create' %}" class="btn btn-primary">질문 등록하기</a>
+    <a href="{% url 'pybo:magazine_create' %}" class="btn btn-primary">질문 등록하기</a>
 </div>
-<form id="searchForm" method="get" action="{% url 'index' %}">
+<form id="searchForm" method="get" action="{% url 'pybo:magazine_data' %}">
     <input type="hidden" id="kw" name="kw" value="{{ kw|default_if_none:'' }}">
     <input type="hidden" id="page" name="page" value="{{ page }}">
     <input type="hidden" id="so" name="so" value="{{ so }}">
@@ -140,3 +140,4 @@ $(document).ready(function(){
 });
 </script>
 {% endblock %}
+

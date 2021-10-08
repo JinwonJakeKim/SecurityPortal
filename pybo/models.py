@@ -59,6 +59,13 @@ class Model_trend(models.Model):
     def __str__(self):
         return self.subject
 
+class Model_magazine(models.Model):
+    image = models.ImageField(upload_to='images/', blank=True, null=True, default='images/no_img.jpg')
+    subject = models.CharField(max_length=200)
+    content = models.TextField()
+    create_date = models.DateTimeField()
+    # modify_date = models.DateTimeField(null=True, blank=True)
+
 class FileUpload(models.Model):
     title = models.TextField(max_length=40, null=True)
     imgfile = models.ImageField(null=True, upload_to="", blank=True)
@@ -75,6 +82,11 @@ class Question(models.Model):
 
     def __str__(self):
         return self.subject
+
+
+
+
+
 
 class Answer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
@@ -103,5 +115,10 @@ class guide_Answer(models.Model):
 
 class trend_Answer(models.Model):
     trend = models.ForeignKey(Model_trend, null=True, on_delete=models.CASCADE)
+    content = models.TextField()
+    create_date = models.DateTimeField()
+
+class magazine_Answer(models.Model):
+    magazine = models.ForeignKey(Question, null=True, on_delete=models.CASCADE)
     content = models.TextField()
     create_date = models.DateTimeField()
